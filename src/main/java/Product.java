@@ -1,7 +1,10 @@
+import org.bson.types.ObjectId;
+
 public class Product {
 
     private String name;
     private double price;
+    private String id;
 
     Product() {
 
@@ -27,5 +30,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

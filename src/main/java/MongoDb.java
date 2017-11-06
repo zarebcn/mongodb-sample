@@ -28,21 +28,25 @@ public class MongoDb {
         // Get collection called "products"
         MongoCollection<Document> products = db.getCollection("products");
 
-        System.out.println(getById(products, new ObjectId("59ff4fe4d56a830e40d0abcb")).getName());
+        Product p1 = getById(products, new ObjectId("59f76dcb7ed2404b9cce04e2"));
+
+        System.out.println(p1.getName() + ", " + p1.getPrice());
 
         List<Product> productos = getAll(products);
 
-        System.out.println(productos.get(0).getName());
+        for (Product p : productos) {
+            System.out.println(p.getName() + ", " + p.getPrice() + ", id: " + p.getId());
+        }
 
         Product producto = new Product("ps4", 300.0);
 
-        addProduct(products, producto);
+        //addProduct(products, producto);
 
-        removeProduct(products, new ObjectId("59ff4fe4d56a830e40d0abcb"));
+        //removeProduct(products, new ObjectId("59ff4fe4d56a830e40d0abcb"));
 
         Product producto1 = new Product("ps3", 90.0);
 
-        editProduct(products, new ObjectId("59ff645ef991ce16a85c1707"), producto1);
+        //editProduct(products, new ObjectId("59ff645ef991ce16a85c1707"), producto1);
 
         client.close();
 
@@ -60,6 +64,7 @@ public class MongoDb {
             String name = (String) doc.get("name");
             double price = (Double) doc.get("price");
             producto = new Product(name, price);
+            producto.setId(doc.get("_id").toString());
         }
         return producto;
     }
@@ -76,6 +81,7 @@ public class MongoDb {
             String name = (String) doc.get("name");
             double price = (Double) doc.get("price");
             producto = new Product(name, price);
+            producto.setId(doc.get("_id").toString());
             productos.add(producto);
         }
         return productos;
